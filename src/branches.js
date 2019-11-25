@@ -47,15 +47,12 @@ const isArgumentIsAnInteger = function(argument) {
 };
 
 const isPairValid = function(elementArray) {
-  const options = ["--beverage", "--empId"];
-  if (elementArray[0] == "--qty") {
+  const options = ["--beverage","--date"];
+  if ((elementArray[0] == "--qty") || (elementArray[0] == '--empId')) {
     let quantity = elementArray[1].split(",");
     return quantity.every(isArgumentIsAnInteger);
   }
-  if (options.includes(elementArray[0])) {
-    return true;
-  }
-  return false;
+  return (options.includes(elementArray[0]));
 };
 
 const isArgNotValid = function(commandArg){
@@ -63,13 +60,13 @@ const isArgNotValid = function(commandArg){
     return true;
   }
   const pairedArg = slicing(commandArg);
-  if((commandArg[0] == '--query') && (pairedArg.length != 1)){
+  if((commandArg[0] == '--query') && (pairedArg.length != 2)){
     return true;
   }
-  if((commandArg[0] == '--save') && (pairedArg.length != 3)){
+  if((commandArg[0] == '--save') && (pairedArg.length != 4)){
     return true;
   }
-  return !pairedArg.every(isPairValid);
+  return !(pairedArg.every(isPairValid));
 };
 
 /////////////////////////////////////////////////
@@ -77,3 +74,4 @@ const isArgNotValid = function(commandArg){
 exports.save = save;
 exports.query = query;
 exports.isArgNotValid = isArgNotValid;
+exports.isPairValid = isPairValid;
