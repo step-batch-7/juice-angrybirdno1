@@ -1,6 +1,7 @@
 const assert = require('assert');
 const save = require('../src/branches.js').save;
 const query = require('../src/branches.js').query;
+const isArgNotValid = require('../src/branches.js').isArgNotValid;
 
 describe('test of save function',function(){
   it('if a person ordering for the first time, should add empId as a new key',function(){
@@ -35,5 +36,35 @@ describe('test of query function',function(){
     let actualValue = query(empId,preDetails);
     let expectedValue = "the employee does not existing";
     assert.deepStrictEqual(actualValue,expectedValue);
+  })
+  it('if the preDetails are an empty object it should return a message',function(){
+    let preDetails = {};
+    let empId = '1111';
+    let actualValue = query(empId,preDetails);
+    let expectedValue = "the employee does not existing";
+    assert.deepStrictEqual(actualValue,expectedValue);
+  })
+});
+
+describe('test of isArgNotValid function',function(){
+  it('should return false for valid arguments',function(){
+    let arg = ['--save','--beverage','orange','--empId','111','--qty','1'];
+    assert.deepStrictEqual(isArgNotValid(arg),false);
+    arg = ['--query','--empId','1'];
+    assert.deepStrictEqual(isArgNotValid(arg),false);
+  })
+  it('should return true for invalid arguments',function(){
+    let arg = ['--save','--beverage','orange','--empId','111','--qty','1d'];
+    assert.deepStrictEqual(isArgNotValid(arg),true);
+    arg = ['--save','--beverage','orange','--empId','111','--qty','1','asd'];
+    assert.deepStrictEqual(isArgNotValid(arg),true);
+    arg = ['--save','--beverage','orange','--empId','111','--qty'];
+    assert.deepStrictEqual(isArgNotValid(arg),true);
+    arg = ['-save','--beverage','orange','--empId','111','--qty','1'];
+    assert.deepStrictEqual(isArgNotValid(arg),true);
+    arg = ['--query','--beverage','orange','--empId','111','--qty','1'];
+    assert.deepStrictEqual(isArgNotValid(arg),true);
+    arg = ['-query','--empId','111'];
+    assert.deepStrictEqual(isArgNotValid(arg),true);
   })
 });
