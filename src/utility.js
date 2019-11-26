@@ -9,5 +9,38 @@ const loadTransaction = function(path){
   return JSON.parse(fs.readFileSync(path,'utf8'));
 };
 
+const saveMessage = function(purchaseDetails){
+  return 'Transaction Recorded:\nEmployee ID,Beverage,Quantity,date'+'\n'+
+    purchaseDetails['--empId']+','+purchaseDetails['--beverage']+','+purchaseDetails['--date'];
+};
+
+const invalidMessage = function(){
+  return 'the entered arguments are not valid, use the following format\n\n' + 
+  "for ordering\t" + '--save --beverage <juice name> --empId <employee ID> --qty <number of juices>\n'+
+  'for query\t' + '--query --empId <employee ID>' ;
+};
+
+const availableJuices = function(){
+  return [
+    "orange","grapes","mango",
+    "watermelon","papaya","pomegranate",
+    "muskmelon","butterfruit","apple",
+    "lemon","pineapple","strawberry",
+    "banana","carrot","tomato"
+  ];
+};
+
+const getObjectList = function(timeStampedArg){
+  const purchaseDetails = {};
+  for(let index = 0; index < timeStampedArg.length; index += 2){
+    purchaseDetails[timeStampedArg[index]] = timeStampedArg[index+1];
+  }
+  return purchaseDetails;
+};
+
 exports.loadTransaction = loadTransaction;
 exports.uploadTransaction = uploadTransaction;
+exports.saveMessage = saveMessage;
+exports.invalidMessage = invalidMessage;
+exports.availableJuices = availableJuices;
+exports.getObjectList = getObjectList;

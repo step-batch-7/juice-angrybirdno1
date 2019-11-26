@@ -42,18 +42,22 @@ const slicing = function(array) {
   return returnArray;
 };
 
+/////////////////////////////////////////////////
+
 const isArgumentIsAnInteger = function(argument) {
-  return +argument > 0 && +argument % 1 == 0;
+  return Number.isInteger(+argument) && +argument > 0;
 };
 
 const isPairValid = function(elementArray) {
   const options = ["--beverage","--date"];
-  if ((elementArray[0] == "--qty") || (elementArray[0] == '--empId')) {
-    let quantity = elementArray[1].split(",");
-    return quantity.every(isArgumentIsAnInteger);
+  if((elementArray[0] == "--qty") || (elementArray[0] == '--empId')) {
+    let quantity = elementArray[1];
+    return isArgumentIsAnInteger(quantity);
   }
   return (options.includes(elementArray[0]));
 };
+
+/////////////////////////////////////////////////
 
 const isArgNotValid = function(commandArg){
   if((!['--save','--query'].includes(commandArg[0])) || commandArg.length % 2 == 0){

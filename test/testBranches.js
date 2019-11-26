@@ -67,6 +67,10 @@ describe('test of isArgNotValid function',function(){
     assert.deepStrictEqual(isArgNotValid(arg),true);
     arg = ['-query','--empId','111'];
     assert.deepStrictEqual(isArgNotValid(arg),true);
+    arg = ['--save','--beverage','orange','--empId','111,3','--qty','1','--date','25-11-19']
+    assert.deepStrictEqual(isArgNotValid(arg),true);
+    arg = ['--save','--beverage','orange','--empId','111','--qty','1,3','--date','25-11-19']
+    assert.deepStrictEqual(isArgNotValid(arg),true);
   })
 });
 
@@ -85,5 +89,7 @@ describe('test of isPairVaild',function(){
     assert.deepStrictEqual(isPairValid(['22-3-19','--date']),false);
     assert.deepStrictEqual(isPairValid(['1111','--empId']),false);
     assert.deepStrictEqual(isPairValid(['234','--qty']),false);
+    assert.deepStrictEqual(isPairValid(['--qty','11,11']),false);
+    assert.deepStrictEqual(isPairValid(['--empId','11,11']),false);
   })
 });

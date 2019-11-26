@@ -1,19 +1,6 @@
 const assert = require('assert');
 const beverage = require('../src/lib.js').beverage;
 
-/*describe('check date',function(){
-  it.only('time should match',function(){
-    let date = getDate();
-    let expectedDate = new Date().toJSON();
-    assert.deepStrictEqual(date,expectedDate);
-  })
-});
-
-
-const getDate = function() {
-  return new Date().toJSON();
-}*/
-
 describe('test beverage function ',function(){
   it('should return report of data record,if the option is a valid save option',function(){
     let actualDate = new Date().toJSON();
