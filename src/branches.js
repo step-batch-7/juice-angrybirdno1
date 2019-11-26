@@ -12,7 +12,8 @@ const query = function(empId,transactionRecords){
   }
   const individualPurchase =  transactionRecords[empId].map(getList(empId));
   individualPurchase.unshift(['Employee ID', 'Beverage', 'Quantity', 'date']);
-  return individualPurchase.join('\n');
+  individualPurchase.push([individualPurchase.length, 'juices']);
+  return individualPurchase;
 };
 
 /////////////////////////////////////////////////
@@ -34,48 +35,5 @@ const save = function(purchaseDetails,content){
 
 /////////////////////////////////////////////////
 
-const slicing = function(array) {
-  const returnArray = [];
-  for (index = 1; index < array.length; index += 2) {
-    returnArray.push([array[index], array[index + 1]]);
-  }
-  return returnArray;
-};
-
-/////////////////////////////////////////////////
-
-const isArgumentIsAnInteger = function(argument) {
-  return Number.isInteger(+argument) && +argument > 0;
-};
-
-const isPairValid = function(elementArray) {
-  const options = ["--beverage","--date"];
-  if((elementArray[0] == "--qty") || (elementArray[0] == '--empId')) {
-    let quantity = elementArray[1];
-    return isArgumentIsAnInteger(quantity);
-  }
-  return (options.includes(elementArray[0]));
-};
-
-/////////////////////////////////////////////////
-
-const isArgNotValid = function(commandArg){
-  if((!['--save','--query'].includes(commandArg[0])) || commandArg.length % 2 == 0){
-    return true;
-  }
-  const pairedArg = slicing(commandArg);
-  if((commandArg[0] == '--query') && (pairedArg.length != 2)){
-    return true;
-  }
-  if((commandArg[0] == '--save') && (pairedArg.length != 4)){
-    return true;
-  }
-  return !(pairedArg.every(isPairValid));
-};
-
-/////////////////////////////////////////////////
-
 exports.save = save;
 exports.query = query;
-exports.isArgNotValid = isArgNotValid;
-exports.isPairValid = isPairValid;
