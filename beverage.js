@@ -5,9 +5,11 @@ const loadTransaction = require("./src/utility.js").loadTransaction;
 
 const main = function() {
   const commandArg = process.argv.slice(2);
-  commandArg.push("date", new Date().toJSON());
+  const now = new Date().toJSON();
   let previousDetails = loadTransaction("./statitics.json");
-  console.log(beverage(commandArg, previousDetails, "./statitics.json"));
+  console.log(
+    beverage(commandArg, previousDetails, now, "./statitics.json").join("\n")
+  );
 };
 
 main();

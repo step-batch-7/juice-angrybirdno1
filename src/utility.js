@@ -6,21 +6,9 @@ const uploadTransaction = function(path, content) {
 
 const loadTransaction = function(path) {
   if (!fs.existsSync(path)) {
-    fs.writeFileSync(path, "{}", "utf8");
+    fs.writeFileSync(path, "[]", "utf8");
   }
   return JSON.parse(fs.readFileSync(path, "utf8"));
-};
-
-const saveMessage = function(purchaseDetails) {
-  return (
-    "Transaction Recorded:\nEmployee ID,Beverage,Quantity,date" +
-    "\n" +
-    purchaseDetails["--empId"] +
-    "," +
-    purchaseDetails["--beverage"] +
-    "," +
-    purchaseDetails["--date"]
-  );
 };
 
 const invalidMessage = function() {
@@ -61,21 +49,18 @@ const getObjectList = function(timeStampedArg) {
   return purchaseDetails;
 };
 
-const concatMap = function(elements) {
-  const concatArray = [];
-  for (index = 0; index < elements.length; index++) {
-    let subArray = elements[index];
-    for (let i = 0; i < subArray.length; i++) {
-      concatArray.push(subArray[i]);
-    }
-  }
-  return concatArray;
+const formatter = function(element) {
+  return [
+    element["--empId"],
+    element["--beverage"],
+    element["--qty"],
+    element["date"]
+  ];
 };
 
+exports.formatter = formatter;
 exports.loadTransaction = loadTransaction;
 exports.uploadTransaction = uploadTransaction;
-exports.saveMessage = saveMessage;
 exports.invalidMessage = invalidMessage;
 exports.availableJuices = availableJuices;
 exports.getObjectList = getObjectList;
-exports.concatMap = concatMap;

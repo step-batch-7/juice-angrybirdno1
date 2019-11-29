@@ -1,11 +1,13 @@
 const isPosInteger = function(num) {
   return Number.isInteger(+num) && +num > 0;
 };
-
+const returnTrue = function(argv) {
+  return true;
+};
 /////////////////////////////////////////////////
 
-function isValidDate(s) {
-  var bits = s.split("-");
+function isValidDate(date) {
+  var bits = date.split("-");
   if (bits[0] == 0) {
     return false;
   }
@@ -26,20 +28,22 @@ const slicing = function(array) {
 /////////////////////////////////////////////////
 
 const isQueryPairVaild = function(pair) {
-  if (pair[0] == "--date") {
-    return isValidDate(pair[1]);
+  if (!["--date", "--empId", "--beverage"].includes(pair[0])) {
+    return false;
   }
-  if (pair[0] == "--empId") {
-    return isPosInteger(pair[1]);
-  }
-  return false;
+  const funcReferences = {
+    "--date": isValidDate,
+    "--empId": isPosInteger,
+    "--beverage": returnTrue
+  };
+  return funcReferences[pair[0]](pair[1]);
 };
 
 /////////////////////////////////////////////////
 
 const queryValidation = function(arg) {
   const pairedArg = slicing(arg);
-  if (pairedArg.length > 2) {
+  if (pairedArg.length > 3) {
     return false;
   }
   return pairedArg.every(isQueryPairVaild);
@@ -48,13 +52,15 @@ const queryValidation = function(arg) {
 /////////////////////////////////////////////////
 
 const isSavePairVaild = function(pair) {
-  if (pair[0] == "--beverage") {
-    return true;
+  if (!["--beverage", "--empId", "--qty"].includes(pair[0])) {
+    return false;
   }
-  if (pair[0] == "--empId" || pair[0] == "--qty") {
-    return isPosInteger(pair[1]);
-  }
-  return false;
+  const funcReferences = {
+    "--beverage": returnTrue,
+    "--empId": isPosInteger,
+    "--qty": isPosInteger
+  };
+  return funcReferences[pair[0]](pair[1]);
 };
 
 /////////////////////////////////////////////////
@@ -86,15 +92,17 @@ const isIncludes = function(options) {
 /////////////////////////////////////////////////
 
 const isArgNotValid = function(commandArg) {
-  if (
-    !["--save", "--query"].includes(commandArg[0]) ||
+  const property1 =
+    ["--save", "--query"].includes(commandArg[0]) ||
     commandArg.length % 2 == 0 ||
-    commandArg.length == 2
-  ) {
-    return true;
-  }
+    commandArg.length == 2;
   const options = commandArg.slice(0, -2).map(getUserOptions);
-  if (!options.every(isIncludes)) {
+  const property2 = options.every(isIncludes);
+  const pairedArg = slicing(commandArg.slice(1, -2));
+  const property3 = commandArg[0] == "--save" && pairedArg.length != 3;
+  const property4 = commandArg[0] == "--query" && pairedArg.length > 2;
+
+  if (!(property1 || property2)) {
     return true;
   }
   requiredOption = commandArg.slice(1, -2);

@@ -1,7 +1,7 @@
 const assert = require("assert");
 const isArgNotValid = require("../src/validation.js").isArgNotValid;
 
-describe("test of isArgumentNotValid function", function() {
+describe("isArgumentNotValid", function() {
   it("should return false for valid arguments", function() {
     assert.deepStrictEqual(
       isArgNotValid([
@@ -40,6 +40,20 @@ describe("test of isArgumentNotValid function", function() {
         "2000-12-24",
         "--empId",
         "111",
+        "date",
+        "22-11-19"
+      ]),
+      false
+    );
+    assert.deepStrictEqual(
+      isArgNotValid([
+        "--query",
+        "--date",
+        "2000-12-24",
+        "--empId",
+        "111",
+        "--beverage",
+        "orange",
         "date",
         "22-11-19"
       ]),
