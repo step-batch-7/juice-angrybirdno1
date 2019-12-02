@@ -107,9 +107,9 @@ const isArgNotValid = function(commandArg) {
   }
   requiredOption = commandArg.slice(1, -2);
   if (commandArg[0] == "--query") {
-    return !queryValidation(commandArg.slice(1, -2));
+    return !queryValidation(commandArg.slice(1));
   }
-  return !saveValidation(commandArg.slice(1, -2));
+  return !saveValidation(commandArg.slice(1));
 };
 
 exports.isArgNotValid = isArgNotValid;

@@ -3,7 +3,7 @@ const beverage = require("../src/lib.js").beverage;
 
 describe("beverage", function() {
   it("should return report of data record,if the option is a valid save option", function() {
-    let actualDate = new Date().toJSON();
+    let actualDate = new Date();
     let expectedDate = new Date().toJSON();
     let arg = [
       "--save",
@@ -12,36 +12,16 @@ describe("beverage", function() {
       "--empId",
       "111",
       "--qty",
-      "2",
-      "date",
-      actualDate
+      "2"
     ];
     let actualValue = beverage(arg, [], actualDate, "./statitics.json");
     let expectedValue = [
-      ["transaction recorded :"],
+      ["Transaction Recorded:"],
       ["Employee ID,Beverage,Quantity,Date"],
       ["111", "orange", "2", expectedDate]
     ];
     assert.deepStrictEqual(actualValue, expectedValue);
   });
-  // it("should return a message if we entered an unavailable juice", function() {
-  //   let actualDate = new Date().toJSON();
-  //   let expectedDate = new Date().toJSON();
-  //   let arg = [
-  //     "--save",
-  //     "--beverage",
-  //     "tendercoconut",
-  //     "--empId",
-  //     "111",
-  //     "--qty",
-  //     "2",
-  //     "--date",
-  //     actualDate
-  //   ];
-  //   let actualValue = beverage(arg, {}, "./statitics.json");
-  //   let expectedValue = "sorry... tendercoconut juice is not available";
-  //   assert.deepStrictEqual(actualValue, expectedValue);
-  // });
   it("should return an acknowledgement message if the arguments are invalid", function() {
     let actualDate = new Date().toJSON();
     let expectedDate = new Date().toJSON();
@@ -57,10 +37,13 @@ describe("beverage", function() {
       actualDate
     ];
     let actualValue = beverage(arg, {}, "./statitics.json");
-    let expectedValue =
-      "the entered arguments are not valid, use the following format\n\n" +
-      "for ordering	--save --beverage <juice name> --empId <employee ID> --qty <number of juices>\n" +
-      "for query	--query --empId <employee ID>";
+    let expectedValue = [
+      ["the entered arguments are not valid, use the following format"],
+      [
+        "for ordering	--save --beverage <juice name> --empId <employee ID> --qty <number of juices>"
+      ],
+      ["for query	--query --empId <employee ID>"]
+    ];
     assert.deepStrictEqual(actualValue, expectedValue);
   });
   it("should return all the records of the given id for query with empId", function() {
@@ -242,6 +225,25 @@ describe("beverage", function() {
       ["Employee ID,Beverage,Quantity,Date"],
       ["111", "orange", "2", "2019-11-29T08:03:29.646Z"],
       ["Total: 2 Juices"]
+    ];
+    assert.deepStrictEqual(actualValue, expectedValue);
+  });
+  it("should return an empty array if the entered combination doesn'exist ", function() {
+    let actualDate = new Date().toJSON();
+    let expectedDate = new Date().toJSON();
+    let Transaction = [
+      {
+        "--beverage": "apple",
+        "--empId": "222",
+        "--qty": "2",
+        date: "2019-10-29T08:03:29.646Z"
+      }
+    ];
+    let arg = ["--query", "--empId", "111"];
+    let actualValue = beverage(arg, Transaction, "./statitics.json");
+    let expectedValue = [
+      ["Employee ID,Beverage,Quantity,Date"],
+      ["Total: 0 Juices"]
     ];
     assert.deepStrictEqual(actualValue, expectedValue);
   });

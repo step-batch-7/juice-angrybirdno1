@@ -11,38 +11,17 @@ describe("isArgumentNotValid", function() {
         "--empId",
         "111",
         "--qty",
-        "2",
-        "date",
-        "22-11-19"
+        "2"
       ]),
       false
     );
+    assert.deepStrictEqual(isArgNotValid(["--query", "--empId", "111"]), false);
     assert.deepStrictEqual(
-      isArgNotValid(["--query", "--empId", "111", "date", "22-11-19"]),
+      isArgNotValid(["--query", "--empId", "111", "--date", "2000-12-24"]),
       false
     );
     assert.deepStrictEqual(
-      isArgNotValid([
-        "--query",
-        "--empId",
-        "111",
-        "--date",
-        "2000-12-24",
-        "date",
-        "22-11-19"
-      ]),
-      false
-    );
-    assert.deepStrictEqual(
-      isArgNotValid([
-        "--query",
-        "--date",
-        "2000-12-24",
-        "--empId",
-        "111",
-        "date",
-        "22-11-19"
-      ]),
+      isArgNotValid(["--query", "--date", "2000-12-24", "--empId", "111"]),
       false
     );
     assert.deepStrictEqual(
@@ -53,9 +32,7 @@ describe("isArgumentNotValid", function() {
         "--empId",
         "111",
         "--beverage",
-        "orange",
-        "date",
-        "22-11-19"
+        "orange"
       ]),
       false
     );
@@ -69,9 +46,7 @@ describe("isArgumentNotValid", function() {
         "--empId",
         "111",
         "--qty",
-        "2d",
-        "date",
-        "22-11-19"
+        "2d"
       ]),
       true
     );
@@ -83,9 +58,7 @@ describe("isArgumentNotValid", function() {
         "--empId",
         "11d1",
         "--qty",
-        "2",
-        "date",
-        "22-11-19"
+        "2"
       ]),
       true
     );
@@ -97,9 +70,7 @@ describe("isArgumentNotValid", function() {
         "-empId",
         "111",
         "--qty",
-        "2",
-        "date",
-        "22-11-19"
+        "2"
       ]),
       true
     );
@@ -108,87 +79,31 @@ describe("isArgumentNotValid", function() {
       true
     );
     assert.deepStrictEqual(
-      isArgNotValid([
-        "--query",
-        "--empId",
-        "111",
-        "--date",
-        "2000-13-3",
-        "date",
-        "22-11-19"
-      ]),
+      isArgNotValid(["--query", "--empId", "111", "--date", "2000-13-3"]),
       true
     );
     assert.deepStrictEqual(
-      isArgNotValid([
-        "--query",
-        "--empId",
-        "111",
-        "--date",
-        "0-1-3",
-        "date",
-        "22-11-19"
-      ]),
+      isArgNotValid(["--query", "--empId", "111", "--date", "0-1-3"]),
       true
     );
     assert.deepStrictEqual(
-      isArgNotValid([
-        "--query",
-        "--empId",
-        "111",
-        "--date",
-        "2000-0-3",
-        "date",
-        "22-11-19"
-      ]),
+      isArgNotValid(["--query", "--empId", "111", "--date", "2000-0-3"]),
       true
     );
     assert.deepStrictEqual(
-      isArgNotValid([
-        "--query",
-        "--empId",
-        "111",
-        "--date",
-        "2000-1-0",
-        "date",
-        "22-11-19"
-      ]),
+      isArgNotValid(["--query", "--empId", "111", "--date", "2000-1-0"]),
       true
     );
     assert.deepStrictEqual(
-      isArgNotValid([
-        "--query",
-        "--empId",
-        "111",
-        "--date",
-        "2000-2-30",
-        "date",
-        "22-11-19"
-      ]),
+      isArgNotValid(["--query", "--empId", "111", "--date", "2000-2-30"]),
       true
     );
     assert.deepStrictEqual(
-      isArgNotValid([
-        "--query",
-        "--empId",
-        "111",
-        "--date",
-        "2001-2-29",
-        "date",
-        "22-11-19"
-      ]),
+      isArgNotValid(["--query", "--empId", "111", "--date", "2001-2-29"]),
       true
     );
     assert.deepStrictEqual(
-      isArgNotValid([
-        "--query",
-        "--empId",
-        "111",
-        "--date",
-        "2000-4-31",
-        "date",
-        "22-11-19"
-      ]),
+      isArgNotValid(["--query", "--empId", "111", "--date", "2000-4-31"]),
       true
     );
     assert.deepStrictEqual(isArgNotValid([]), true);

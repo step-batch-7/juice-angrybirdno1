@@ -209,4 +209,20 @@ describe("query", function() {
     ];
     assert.deepStrictEqual(actualValue, expectedValue);
   });
+  it("should return empty array of object if the combination doesn't exist", function() {
+    const preDetails = [
+      {
+        "--beverage": "apple",
+        "--empId": "222",
+        "--qty": "1",
+        date: "2019-10-28T10:00:08.568Z"
+      }
+    ];
+    let purchase = {
+      "--empId": "111"
+    };
+    let actualValue = query(purchase, preDetails);
+    let expectedValue = [];
+    assert.deepStrictEqual(actualValue, expectedValue);
+  });
 });

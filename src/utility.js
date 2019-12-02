@@ -12,13 +12,14 @@ const loadTransaction = function(path) {
 };
 
 const invalidMessage = function() {
-  return (
-    "the entered arguments are not valid, use the following format\n\n" +
-    "for ordering\t" +
-    "--save --beverage <juice name> --empId <employee ID> --qty <number of juices>\n" +
-    "for query\t" +
-    "--query --empId <employee ID>"
-  );
+  return [
+    ["the entered arguments are not valid, use the following format"],
+    [
+      "for ordering\t" +
+        "--save --beverage <juice name> --empId <employee ID> --qty <number of juices>"
+    ],
+    ["for query\t" + "--query --empId <employee ID>"]
+  ];
 };
 
 const availableJuices = function() {
