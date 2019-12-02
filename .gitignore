@@ -4,7 +4,5 @@ statitics.json
 .gitignore
 missingFile.json
 report.sh
-runAppTests.sh
 .gitignore.swp
-appTest/
 statitics.json
