@@ -22,26 +22,6 @@ const invalidMessage = function() {
   ];
 };
 
-const availableJuices = function() {
-  return [
-    "orange",
-    "grapes",
-    "mango",
-    "watermelon",
-    "papaya",
-    "pomegranate",
-    "muskmelon",
-    "butterfruit",
-    "apple",
-    "lemon",
-    "pineapple",
-    "strawberry",
-    "banana",
-    "carrot",
-    "tomato"
-  ];
-};
-
 const getObjectList = function(timeStampedArg) {
   const purchaseDetails = {};
   for (let index = 0; index < timeStampedArg.length; index += 2) {
@@ -63,5 +43,4 @@ exports.formatter = formatter;
 exports.loadTransaction = loadTransaction;
 exports.uploadTransaction = uploadTransaction;
 exports.invalidMessage = invalidMessage;
-exports.availableJuices = availableJuices;
 exports.getObjectList = getObjectList;

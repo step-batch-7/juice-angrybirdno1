@@ -18,7 +18,11 @@ const beverage = function(commandArg, transaction, now, path) {
     const queriedDetails = query(purchaseDetails, transaction).map(formatter);
     const counts = queriedDetails.map(getCount);
     queriedDetails.unshift(["Employee ID,Beverage,Quantity,Date"]);
-    queriedDetails.push(["Total: " + counts.reduce(sum, 0) + " Juices"]);
+    const Total = counts.reduce(sum, 0);
+    Total > 1
+      ? queriedDetails.push(["Total: " + Total + " Juices"])
+      : queriedDetails.push(["Total: " + Total + " Juice"]);
+    // queriedDetails.push(["Total: " + Total + " Juices"]);
     return queriedDetails;
   }
   argCopy.push("date", now.toJSON());
