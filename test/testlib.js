@@ -247,4 +247,24 @@ describe('beverage', function() {
     ];
     assert.deepStrictEqual(actualValue, expectedValue);
   });
+  it('should return allthe transactions if we queried by single digit date', function() {
+    let actualDate = new Date().toJSON();
+    let expectedDate = new Date().toJSON();
+    let Transaction = [
+      {
+        '--beverage': 'apple',
+        '--empId': '222',
+        '--qty': '2',
+        date: '2019-01-29T08:03:29.646Z'
+      }
+    ];
+    let arg = ['--query', '--date', '2019-1-29'];
+    let actualValue = beverage(arg, Transaction, './statitics.json');
+    let expectedValue = [
+      ['Employee ID,Beverage,Quantity,Date'],
+      ['222', 'apple', '2', '2019-01-29T08:03:29.646Z'],
+      ['Total: 2 Juices']
+    ];
+    assert.deepStrictEqual(actualValue, expectedValue);
+  });
 });
